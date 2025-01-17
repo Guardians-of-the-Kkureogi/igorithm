@@ -16,4 +16,4 @@
 ### File name Rule
 
 - 풀이사이트_문제명_이름
-- **Ex)** Programmers_명예의 전당_영원원
+- **Ex)** Programmers_명예의 전당_영원
