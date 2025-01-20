@@ -20,7 +20,7 @@ function solution(k, scores) {
                 score_asc.push(score)
             }
             answer.push(score_asc[score_asc.length - 1]) // 최하위 점수 추가
-        }
+        } 
         else { // 리스트 길이가 k 이상일 때
             let isPush = false
             for (let i = 0; i < k; i++) {
