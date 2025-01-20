@@ -22,6 +22,6 @@ function solution(want, number, discount) {
         if (copyWantList.length == 0) // 원하는 품목 모두 받았을 때 answer++
             answer++;
         discount.shift()
-    }
+    } 
     return answer;
 }
