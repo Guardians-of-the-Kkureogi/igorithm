@@ -1,25 +1,30 @@
-function backtracking(picks, minerals, minCost, cost) {
+// 실패원인 : splice는 원본 배열 값을 변경하여서 곡괭이와 광물을 원상복구 안시켜둠. slice()를 이용해서 복사해서 사용해야함.
+
+function backtracking(picks, minerals, index, minCost, cost) {
     if (minerals.length <= 0) { // 광물 전부 사용 시 return
-        minCost.value = cost
+        if (minCost.value > cost)
+            minCost.value = cost
         return
     }
 
-    let pickZeroCheck = false
-    picks.forEach((pick) => { 
-        pickZeroCheck = pick === 0 ? true : false
+    let pickZeroCheck = 3
+    picks.forEach((pick) => {
+        pickZeroCheck = pick === 0 ? pickZeroCheck - 1 : pickZeroCheck
     })
 
-    if (pickZeroCheck) { // 곡괭이 전부 사용 시 return
-        minCost.value = cost
+    if (pickZeroCheck === 0) { // 곡괭이 전부 사용 시 return
+        if (minCost.value > cost)
+            minCost.value = cost
         return
     }
 
-    const useMinerals = minerals.splice(0, 5) // 미네랄 5개씩 추출
+    const useMinerals = minerals.slice(index, index + 5) // 미네랄 5개씩 추출
 
     for (let i = 0; i < 3; i++) {
         let newCost = cost
         if (picks[i] > 0) { // 곡갱이가 있으면
-            picks[i] -= 1; // 곡갱이 사용
+            let newPicks = picks.slice()
+            newPicks[i] -= 1; // 곡갱이 사용
             useMinerals.forEach(useMineral => {
                 if (i === 0) // 다이아 곡괭이
                     newCost += 1
@@ -33,13 +38,13 @@ function backtracking(picks, minerals, minCost, cost) {
             if (newCost > minCost.value) {
                 return
             }
-            backtracking(picks, minerals, minCost, newCost)
+            backtracking(newPicks, minerals, index + 5, minCost, newCost)
         }
     }
 }
 
 function solution(picks, minerals) {
     const minCost = { value: Infinity } // 객체값으로 전달
-    backtracking(picks, minerals, minCost, 0)
+    backtracking(picks, minerals, 0, minCost, 0)
     return minCost.value;
 }
