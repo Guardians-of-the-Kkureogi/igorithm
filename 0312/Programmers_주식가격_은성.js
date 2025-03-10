@@ -1,3 +1,7 @@
+/**
+ * 이진탐색으로 풀었는데, 이중 for문으로도 풀리는구만..
+ */
+
 function solution(prices) {
     var answer = Array(prices.length).fill(0);
     let arrayList = [];
@@ -39,6 +43,23 @@ function solution(prices) {
       if (a == 0) answer[idx] = prices.length - 1 - idx;
     });
     return answer;
+  }
+
+  // 이중 for문 방식
+  function solutionFor(prices) {
+    let answer = Array(prices.length).fill(0);
+    for (let i = 0; i < prices.length; i++) {
+      for (let j = i; j < prices.length; j++) {
+        if (prices[i] > prices[j]) {
+          answer[i] = j - i;
+          break;
+        }
+      }
+    }
+    answer.forEach((a,idx)=>{
+      if(a == 0) answer[idx] = prices.length -1 - idx
+    })
+    return answer
   }
   
   solution([1, 2, 3, 2, 3]);  
